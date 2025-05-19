@@ -1,0 +1,230 @@
+html {
+  height: 100%;
+  width: 100%;
+  background-color: #003135;
+  color: #0FA4AF;
+  text-align: left;
+}
+
+table {
+  position: absolute;
+  border-collapse: collapse;
+  cell-spacing:0;
+  border: 0;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+button {
+  display: block;
+  margin: auto;
+  background-color: #90AEAD;
+  color: #124223;
+  border: 2px solid #407090;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif; 
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;/*https://www.w3schools.com/cssref/pr_class_cursor.php */
+}
+img{
+  margin: auto;
+}
+button:hover { /* learnt from https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover */
+  background-color: #024950;
+  color: #AFDDE5;
+}
+h1{
+  font-family: Courier New;
+  font-size: 50px;
+  text-align: center;
+}
+p{
+  font-weight:bold;
+  text-align: center;
+  font-family: Courier New;
+}
+td, th {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 96px;
+  min-width: 96px;
+  max-height: 96px;
+  max-width: 96px;
+}
+#seconds {
+  font-family: Courier New;
+  font-weight:bold;
+  top: 30px;
+  left:1200px;
+  position: absolute;
+  z-index: 1;
+  color: #20AAFF;
+  font-size: 39px;
+  padding: 10px;
+  border: 5px solid #90AEAD;
+  background-image: url("images/mud.png");
+}
+#third{
+  opacity: 0.5;
+}
+#score {
+  font-family: Courier New;
+  font-weight:bold;
+  top: 140px;
+  left:1200px;
+  position: absolute;
+  z-index: 1;
+  color: #10CAFF;
+  font-size: 39px;
+  padding: 10px;
+  border: 5px solid #90AEAD;
+  background-image: url("images/mud.png");
+}
+#score1 {
+  font-family: Courier New;
+  font-weight:bold;
+  z-index: 1;
+  display: block;
+  margin: auto;
+  text-align: center;
+  color: #45DDE5;
+  font-size: 39px;
+}
+#highscore {
+  font-family: Courier New;
+  font-weight:bold;
+  z-index: 1;
+  display: block;
+  margin: auto;
+  text-align: center;
+  color: #45DDE5;
+  font-size: 39px;
+}
+
+#leftimage {
+  width: 100%;
+  top: 23%;
+  left: 0%;
+  position: absolute;
+  z-index: -1;
+}
+.image{
+  margin:0.1%;
+  width: 15%;
+}
+#rightimage {
+  width: 100%;
+  top: 20%;
+  left: 69%;
+  position: absolute;
+  z-index: -1;
+}
+
+#middleimage {
+  width:100%;
+  left: 42.5%;
+  bottom: 0%;
+  position: absolute;
+  z-index: -1;
+}
+#box{
+  border: 5px solid #90AEAD;
+  margin: auto;
+  width: 35%;
+  padding: 10px;
+  background-image: url("images/portal.gif");
+}
+#midBox{
+  border: 5px solid #90AEAD;
+  margin: auto;
+  width: 35%;
+  padding: 10px;
+  background-image: url("images/obsidian.png");
+}
+#invisBox{
+  margin: auto;
+  width: 35%;
+  height:30%;
+  padding: 10px;
+  border: 5px solid #90AEAD;
+  background-image: url("images/blackstone.png");
+}
+#return{
+  top: 300px;
+  left:1200px;
+  position: absolute;
+  z-index: 1;
+}
+#win{
+  color: red;
+}
+
+
+
+
+
+
+
+/* Popup container */
+.popup {
+  left:1230px;
+  top: 600px;
+
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 480px;
+  opacity: 100%;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -240px;
+  z-index: 3;
+
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  z-index: 199;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
