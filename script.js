@@ -18,7 +18,6 @@ var width = 12;
 var pigArray = [];//array of all pig locations
 
 let number = 0;//difficulty of pigs as used in genPigs()
-
 /*Sprites/Images from:
 
 - Mineraft/Mojang/Microsoft https://minecraft.novaskin.me/resourcepacks#default/assets/minecraft/models/block, 
@@ -181,11 +180,14 @@ let anvil = '<img src="images/anvil.png">';
 let E = '<img src="images/Empty.png">';;
 let pig = '<img src="images/rsz_pig.png">';
 let a = '<img src="images/rsz_avgpig.png">';//healthy normal pig(bad var name)
+const normalPigs = [pig, a]
 var r1 = '<img src="images/royalePig.png">';
 var r2 = '<img src="images/damagedPig.png">';
 var r3 = '<img src="images/moreDamagedPig.png">';
 var r4 = '<img src="images/dyingPig.png">';
 var r5 = '<img src="images/cookedPig.png">';
+const royalePigs = [r1,r2,r3,r4,r5];
+
 let poof = '<img src="images/poof.png">'; 
 let poof1 = '<img src="images/poof1.png">';
 let poof2 = '<img src="images/poof2.png">';
@@ -194,6 +196,8 @@ let king = '<img src="images/pigKing.png">';
 let king0 = '<img src="images/SadKing.gif">';
 let king1 = '<img src="images/damagedKing.png">';
 let king2 = '<img src="images/veryDamagedKing.png">';
+const kings = [king0,king1,king2];
+
 let burner = '<img src="images/burner.png">';
 let crafter = '<img src="images/crafter.png">';
 let dropper = '<img src="images/player.png">';
@@ -204,6 +208,8 @@ let dropper4 = '<img src="images/player3.png">';
 let mustache1 = '<img src="images/mustache1.png">';
 let mustache2 = '<img src="images/mustache2.png">';
 let mustache3 = '<img src="images/mustache3.png">';
+const mustaches = [mustache1,mustache2,mustache3];
+
 let dispenser1 = '<img src="images/breaker.png">';
 let dispenser2 = '<img src="images/breaker1.png">';
 let dispenser3 = '<img src="images/breaker2.png">';
@@ -217,6 +223,8 @@ var rock3 = '<img src="images/rock2.png">';
 let s1 = '<img src="images/soldier1.png">';
 let s2 = '<img src="images/soldier2.png">';
 let s3 = '<img src="images/soldier3.png">';
+const soldiers = [s1,s2,s3]
+
 let pearl = '<img src="images/pearl.png">';
 let crystal = '<img src="images/crystal.png">';
 let star = '<img src="images/star.png">';
@@ -231,6 +239,9 @@ let c7 = '<img src="images/crate7.png">';
 let c8 = '<img src="images/crate8.png">';
 let c9 = '<img src="images/crate10.png">';
 let c10 = '<img src="images/crate11.png">';
+const crates = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10]
+
+
 let boss = false;//boss mode boolean
 let cake = '<img src="images/cake.png">';
 let monster = '<img src="images/monsterPig.gif">';
@@ -495,7 +506,7 @@ document.addEventListener('keydown', function(event) {
     render();
   }
   if (event.keyCode === 16) {//Right shift (anvil dropper)
-    if (state1[y1+1][x1] == E  && state[y1+1][x1] != p && score>=3) {
+    if (state1[y1+1][x1] == E  && state[y1+1][x1] != p && score>=5) {
       state1[y1+1][x1] = crafter;
       addScore(-5);
       posArray1.push(x1);
@@ -744,12 +755,12 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       }
       if (hit == pig) {
         state1[pos][x + i] = poof;
-        addScore(2);
+        addScore(killValue(hit));
         break;
       }
       if (hit == puffPig) {
         state1[pos][x + i] = poof;
-        addScore(1);
+        addScore(killValue(hit));
         break;
       }
       if (hit == king) {
@@ -766,7 +777,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       }
       if (hit == king2) {
         state1[pos][x + i] = poof;
-        addScore(3);
+        addScore(killValue(hit));
         break;
       }
       if (hit == r1) {
@@ -787,7 +798,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       }
       else if (hit == r5) {
         state1[pos][x + i] = poof;
-        addScore(4);
+        addScore(killValue(hit));
         break;
       }
       else if (hit == poof || hit == poof1 || hit == poof2 ||  hit == crystal || hit == anvil || hit == star){//continues if it hits something it is allowed to go through
@@ -835,7 +846,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       else if (hit == s3) {
         if(breaker){
           state1[pos][x + i] = pig;
-          addScore(2);
+          addScore(killValue(hit));
         }
         
         break;
@@ -843,7 +854,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       else if (hit == monster) {
         if(breaker){
           state1[pos][x + i] = poof;
-          addScore(2);
+          addScore(killValue(hit));
         }
         
         break;
@@ -858,7 +869,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
       }
       if (hit == mustache3) {
         state1[pos][x + i] = poof;
-        addScore(3);
+        addScore(killValue(hit));
         break;
       }
       if (hit == c1) {
@@ -898,7 +909,7 @@ function shoot() {//shoots projectiles from left to right which are the snowball
         break;
       }
       if (hit == c10) {
-        addScore(1);
+        addScore(killValue(hit));
         state1[pos][x + i] = genPig(true);//generates a random pig if a crate is broken
         break;
       }
@@ -930,16 +941,17 @@ function shoot() {//shoots projectiles from left to right which are the snowball
 function dropAnvils(){//Spawns an anvil one element below at every anvil dropper using the posArray1 which contains the position of the anvil droppers and adds the positions of the anvils to the anvilArray.
   for (let i = 0; i < posArray1.length; i++) {
     if(state1[2][posArray1[i]] != E){//checks if the location it is trying to place the anvil is empty
-      if(state1[2][posArray1[i]] == s1 || state1[2][posArray1[i]] == s2 || state1[2][posArray1[i]] == s3){
+      if(soldiers.includes(state1[2][posArray1[i]])){
+        addScore(killValue(state1[2][posArray1[i]]));
         state1[2][posArray1[i]] = pig;
-        addScore(1);
       }
-      else if(state1[2][posArray1[i]] == c1 || state1[2][posArray1[i]] == c2 || state1[2][posArray1[i]] == c3 || state1[2][posArray1[i]] == c4 || state1[2][posArray1[i]] == c5 || state1[2][posArray1[i]] == c6 || state1[2][posArray1[i]] == c7 || state1[2][posArray1[i]] == c8 || state1[2][posArray1[i]] == c9 || state1[2][posArray1[i]] == c10){ // if its a crate it spawns a pig
+      else if(crates.includes(state1[2][posArray1[i]])){ // if its a crate it spawns a pig
+        addScore(killValue(state1[2][posArray1[i]]));
         state1[2][posArray1[i]] = genPig(true);
       }
       else{
+        addScore(killValue(state1[2][posArray1[i]]));
         state1[2][posArray1[i]] = poof;
-        addScore(1);
       }
     }
     else{
@@ -1166,14 +1178,12 @@ function movePigs() {
         if(state1[pigArray[i][0]][pigArray[i][1]] == crystal){
           if(pos[2] == s1 || pos[2] == s2 || pos[2] == s3){
             state1[pigArray[i][0]][pigArray[i][1]] = pig;
-            addScore(1);
           }
           else if(pos[2] == c1 || pos[2] == c2 || pos[2] == c3 || pos[2] == c4 || pos[2] == c5 || pos[2] == c6 || pos[2] == c7 || pos[2] == c8 || pos[2] == c9 || pos[2] == c10){
             state1[pigArray[i][0]][pigArray[i][1]] = genPig(true);
           }
           else{
             state1[pigArray[i][0]][pigArray[i][1]] = poof;
-            addScore(1);
           }
 
         }
@@ -1297,6 +1307,7 @@ function moveAnvils() {//moves all the anvils one unit down using the anvilArray
   for (let i = 0; i < anvilArray.length; i++) {
     let pos = anvilArray[i];
     anvilArray[i][0] = pos[0] + 1;
+    below = state1[anvilArray[i][0]-1][anvilArray[i][1]]
     if (anvilArray[i][0] >= height-1){// if its at the bottom of the map it will remove it from the array
       removal.push(i);
       state1[anvilArray[i][0]-1][anvilArray[i][1]] = E;
@@ -1304,30 +1315,27 @@ function moveAnvils() {//moves all the anvils one unit down using the anvilArray
       continue;
     }
     if(state1[anvilArray[i][0]-1][anvilArray[i][1]] != E && state1[anvilArray[i][0]-1][anvilArray[i][1]] != crafter && state1[anvilArray[i][0]-1][anvilArray[i][1]] != anvil && !isProjectile(state1[anvilArray[i][0]-1][anvilArray[i][1]])){//removal of the anvil if it hits a soldier or crate
-      console.log(state1[anvilArray[i][0]-1][anvilArray[i][1]]);
+      addScore(killValue(below));
       state1[anvilArray[i][0]-1][anvilArray[i][1]] = E;
-      if(state1[anvilArray[i][0]-1][anvilArray[i][1]] == s1 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == s2 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == s3){ // hits a soldier
+      if(soldiers.includes(state1[anvilArray[i][0]-1][anvilArray[i][1]])){ // hits a soldier
         state1[anvilArray[i][0]-1][anvilArray[i][1]] = pig;
-        addScore(1);
       }
         //if its a crate generates a pig 
-      else if(state1[anvilArray[i][0]-1][anvilArray[i][1]] == c1 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c2 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c3 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c4 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c5 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c6 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c7 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c8 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c9 || state1[anvilArray[i][0]-1][anvilArray[i][1]] == c10){
+      else if(crates.includes(state1[anvilArray[i][0]-1][anvilArray[i][1]])){
         state1[anvilArray[i][0]-1][anvilArray[i][1]] = genPig(true);
       }
       else{ // if its not a crate or a soldier
         state1[anvilArray[i][0]-1][anvilArray[i][1]] = poof;
-        addScore(1);
       }
       removal.push(i);
       continue;
     }
 
     if(state1[anvilArray[i][0]][anvilArray[i][1]] != E && !isProjectile(state1[anvilArray[i][0]-1][anvilArray[i][1]])){//removal when it hits a pig
-      
+      addScore(killValue(state1[anvilArray[i][0]][anvilArray[i][1]]));
       state1[anvilArray[i][0]-1][anvilArray[i][1]] = E;
-      if(state1[anvilArray[i][0]][anvilArray[i][1]] == s1 || state1[anvilArray[i][0]][anvilArray[i][1]] == s2 || state1[anvilArray[i][0]][anvilArray[i][1]] == s3){
+      if(soldiers.includes(state1[anvilArray[i][0]][anvilArray[i][1]])){
         state1[anvilArray[i][0]][anvilArray[i][1]] = pig;
-        addScore(1);
       }
         //if its a crate
       else if(state1[anvilArray[i][0]][anvilArray[i][1]] == c1 || state1[anvilArray[i][0]][anvilArray[i][1]] == c2 || state1[anvilArray[i][0]][anvilArray[i][1]] == c3 || state1[anvilArray[i][0]][anvilArray[i][1]] == c4 || state1[anvilArray[i][0]][anvilArray[i][1]] == c5 || state1[anvilArray[i][0]][anvilArray[i][1]] == c6 || state1[anvilArray[i][0]][anvilArray[i][1]] == c7 || state1[anvilArray[i][0]][anvilArray[i][1]] == c8 || state1[anvilArray[i][0]][anvilArray[i][1]] == c9 || state1[anvilArray[i][0]][anvilArray[i][1]] == c10){
@@ -1335,7 +1343,6 @@ function moveAnvils() {//moves all the anvils one unit down using the anvilArray
       }
       else{
         state1[anvilArray[i][0]][anvilArray[i][1]] = poof;
-        addScore(1);
       }
       removal.push(i);
       continue;
@@ -1410,7 +1417,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       }
       if (hit == puffPig) {
           state1[y1+i][pos] = poof;
-        addScore(1);
+        addScore(killValue(hit));
         break;
       }
       if (hit == king) {
@@ -1557,7 +1564,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
         break;
       }
       if (hit == c10) {
-        addScore(1);
+        addScore(killValue(hit));
         state1[y1+i][pos] = genPig(true);
         break;
       }
@@ -1597,6 +1604,34 @@ function myFunction() {
   popup.classList.toggle("show");
 }
 
-function killValue(pig){
-
+function killValue(type){
+  console.log("Value gotten");
+  console.log("Dead Pig Type: " + type);
+  if(crates.includes(type)){
+    return 1;
+  }
+  if(soldiers.includes(type)){
+    return 2;
+  }
+  if(normalPigs.includes(type)){
+    return 2;
+  }
+  if(mustaches.includes(type)){
+    return 3;
+  }
+  if(kings.includes(type)){
+    return 4;
+  }
+  if(royalePigs.includes(type)){
+    return 5;
+  }
+  if(type==monster){
+    return 2;
+  }
+  if(type==puffPig){
+    return 1;
+  }
+  return 0
 }
+
+
