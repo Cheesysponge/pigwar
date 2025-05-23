@@ -1412,7 +1412,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       }
       if (hit == pig) {
           state1[y1+i][pos] = poof;
-        addScore(2);
+        addScore(killValue(hit));
         break;
       }
       if (hit == puffPig) {
@@ -1434,7 +1434,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       }
       if (hit == king2) {
         state1[y1+i][pos] = poof;
-        addScore(3);
+        addScore(killValue(hit));
         break;
       }
       if (hit == r1) {
@@ -1455,7 +1455,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       }
       else if (hit == r5) {
         state1[pos][x + i] = poof;
-        addScore(4);
+        addScore(killValue(hit));
         break;
       }
       else if (hit == poof || hit == poof1 || hit == poof2 ||  hit == crystal || hit == anvil || hit == star){
@@ -1503,14 +1503,14 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       else if (hit == s3) {
         if(breaker){
           state1[y1+i][pos] = pig;
-          addScore(2);
+          addScore(killValue(hit));
         }        
         break;
       }
       else if (hit == monster) {
         if(breaker){
           state1[y1+i][pos] = poof;
-          addScore(2);
+          addScore(killValue(hit));
         }        
         break;
       }
@@ -1524,7 +1524,7 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
       }
       if (hit == mustache3) {
         state1[y1+i][pos] = poof;
-        addScore(3);
+        addScore(killValue(hit));
         break;
       }
       if (hit == c1) {
