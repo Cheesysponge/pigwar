@@ -1406,169 +1406,10 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
 
     for (let i = y1 + 2; i < height; i++) {
       let hit = state1[y1+i][pos];
-      if (hit == a) {
-          state1[y1+i][pos] = pig;
-        break;
+      if (damageSquare(y1+i,pos,breaker)){
+          break;
       }
-      if (hit == pig) {
-          state1[y1+i][pos] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == puffPig) {
-          state1[y1+i][pos] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == king) {
-        state1[y1+i][pos] = king0;
-        break;
-      }
-      if (hit == king0) {
-        state1[y1+i][pos] = king1;
-        break;
-      }
-      if (hit == king1) {
-        state1[y1+i][pos] = king2;
-        break;
-      }
-      if (hit == king2) {
-        state1[y1+i][pos] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == r1) {
-        state1[y1+i][pos] = r2;
-        break;
-      }
-      else if (hit == r2) {
-          state1[y1+i][pos] = r3;
-        break;
-      }
-      else if (hit == r3) {
-          state1[y1+i][pos] = r4;
-        break;
-      }
-      else if (hit == r4) {
-        state1[y1+i][pos] = r5;
-        break;
-      }
-      else if (hit == r5) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      else if (hit == poof || hit == poof1 || hit == poof2 ||  hit == crystal || hit == anvil || hit == star){
-        continue;
-      }
-      else if (hit == b4){
-        if(breaker){
-          state1[y1+i][pos] = poof;
-        }
-        break;
-      }
-      else if (hit == b3){
-        if(breaker){
-          state1[y1+i][pos] = b4;
-        }
-
-        break;
-
-      }
-      else if (hit == b2){
-        if(breaker){
-          state1[y1+i][pos] = b3;
-        }
-        break;
-
-      }
-      else if (hit == b1){
-        if(breaker){
-          state1[y1+i][pos] = b2;
-        }
-        break;
-      }
-      if (hit == s1) {
-        if(breaker){
-          state1[y1+i][pos] = s2;
-        }
-        break;
-      }
-      else if (hit == s2) {
-        if(breaker){
-          state1[y1+i][pos] = s3;
-        }
-        break;
-      }
-      else if (hit == s3) {
-        if(breaker){
-          state1[y1+i][pos] = pig;
-          addScore(killValue(hit));
-        }        
-        break;
-      }
-      else if (hit == monster) {
-        if(breaker){
-          state1[y1+i][pos] = poof;
-          addScore(killValue(hit));
-        }        
-        break;
-      }
-      if (hit == mustache1) {
-        state1[y1+i][pos] = mustache2;
-        break;
-      }
-      if (hit == mustache2) {
-        state1[y1+i][pos] = mustache3;
-        break;
-      }
-      if (hit == mustache3) {
-        state1[y1+i][pos] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == c1) {
-        state1[y1+i][pos] = c2;
-        break;
-      }
-      if (hit == c2) {
-        state1[y1+i][pos] = c3;
-        break;
-      }
-      if (hit == c3) {
-        state1[y1+i][pos] = c4;
-        break;
-      }
-      if (hit == c4) {
-        state1[y1+i][pos] = c5;
-        break;
-      }
-      if (hit == c5) {
-        state1[y1+i][pos] = c6;
-        break;
-      }
-      if (hit == c6) {
-        state1[y1+i][pos] = c7;
-        break;
-      }
-      if (hit == c7) {
-        state1[y1+i][pos] = c8;
-        break;
-      }
-      if (hit == c8) {
-        state1[y1+i][pos] = c9;
-        break;
-      }
-      if (hit == c9) {
-        state1[y1+i][pos] = c10;
-        break;
-      }
-      if (hit == c10) {
-        addScore(killValue(hit));
-        state1[y1+i][pos] = genPig(true);
-        break;
-      }
-      if(state1[i][pos] == portal)
+      else if(state1[i][pos] == portal)
       {
         if(pos == xp2 && i == yp2)
         {
@@ -1631,7 +1472,177 @@ function killValue(type){
   if(type==puffPig){
     return 1;
   }
-  return 0
+  return 0;
+}
+
+function damageSquare(row, col, soldierPopper){
+  if(soldierPopper){
+    breaker = true;
+  }
+  else{
+    breaker = false;
+  }
+  let hit = state1[row][col];
+  if (hit == a) {
+      state1[row][col] = pig;
+    return true;
+  }
+  if (hit == pig) {
+      state1[row][col] = poof;
+    addScore(killValue(hit));
+    return true;
+  }
+  if (hit == puffPig) {
+      state1[row][col] = poof;
+    addScore(killValue(hit));
+    return true;
+  }
+  if (hit == king) {
+    state1[row][col] = king0;
+    return true;
+  }
+  if (hit == king0) {
+    state1[row][col] = king1;
+    return true;
+  }
+  if (hit == king1) {
+    state1[row][col] = king2;
+    return true;
+  }
+  if (hit == king2) {
+    state1[row][col] = poof;
+    addScore(killValue(hit));
+    return true;
+  }
+  if (hit == r1) {
+    state1[row][col] = r2;
+    return true;
+  }
+  else if (hit == r2) {
+      state1[row][col] = r3;
+    return true;
+  }
+  else if (hit == r3) {
+      state1[row][col] = r4;
+    return true;
+  }
+  else if (hit == r4) {
+    state1[row][col] = r5;
+    return true;
+  }
+  else if (hit == r5) {
+    state1[pos][x + i] = poof;
+    addScore(killValue(hit));
+    return true;
+  }
+  else if (hit == b4){
+    if(breaker){
+      state1[row][col] = poof;
+    }
+    return true;
+  }
+  else if (hit == b3){
+    if(breaker){
+      state1[row][col] = b4;
+    }
+
+    return true;
+
+  }
+  else if (hit == b2){
+    if(breaker){
+      state1[row][col] = b3;
+    }
+    return true;
+
+  }
+  else if (hit == b1){
+    if(breaker){
+      state1[row][col] = b2;
+    }
+    return true;
+  }
+  if (hit == s1) {
+    if(breaker){
+      state1[row][col] = s2;
+    }
+    return true;
+  }
+  else if (hit == s2) {
+    if(breaker){
+      state1[row][col] = s3;
+    }
+    return true;
+  }
+  else if (hit == s3) {
+    if(breaker){
+      state1[row][col] = pig;
+      addScore(killValue(hit));
+    }        
+    return true;
+  }
+  else if (hit == monster) {
+    if(breaker){
+      state1[row][col] = poof;
+      addScore(killValue(hit));
+    }        
+    return true;
+  }
+  if (hit == mustache1) {
+    state1[row][col] = mustache2;
+    return true;
+  }
+  if (hit == mustache2) {
+    state1[row][col] = mustache3;
+    return true;
+  }
+  if (hit == mustache3) {
+    state1[row][col] = poof;
+    addScore(killValue(hit));
+    return true;
+  }
+  if (hit == c1) {
+    state1[row][col] = c2;
+    return true;
+  }
+  if (hit == c2) {
+    state1[row][col] = c3;
+    return true;
+  }
+  if (hit == c3) {
+    state1[row][col] = c4;
+    return true;
+  }
+  if (hit == c4) {
+    state1[row][col] = c5;
+    return true;
+  }
+  if (hit == c5) {
+    state1[row][col] = c6;
+    return true;
+  }
+  if (hit == c6) {
+    state1[row][col] = c7;
+    return true;
+  }
+  if (hit == c7) {
+    state1[row][col] = c8;
+    return true;
+  }
+  if (hit == c8) {
+    state1[row][col] = c9;
+    return true;
+  }
+  if (hit == c9) {
+    state1[row][col] = c10;
+    return true;
+  }
+  if (hit == c10) {
+    addScore(killValue(hit));
+    state1[row][col] = genPig(true);
+    return true;
+  }
+  return false;
 }
 
 
