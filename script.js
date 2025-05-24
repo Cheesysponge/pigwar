@@ -6,7 +6,7 @@ function pathFix(str) {//removes everything from the path up till the name of th
   return tempDifficulty;
 }//checks which page the user is on
 var page = pathFix(window.location.pathname); // https://www.w3schools.com/js/js_window_location.asp
-console.log(page);
+//console.log(page);
 //booleans for which page the user is on
 var tutorial = (page == "tutorial.html")
 var main = (page == "main.html")
@@ -82,7 +82,7 @@ var snowiest = '<img src="images/snowball2.png">';
 var ice = '<img src="images/ice2.png">';
 //A random number between 0 and 1 is generated and based on the value a background and path image are selected
 let background = Math.random(0, 1);
-console.log(background);
+//console.log(background);
 if(tutorial){
   p = gravel;
   e = grass;
@@ -249,9 +249,11 @@ let flamer1 = '<img src="images/burner.png">';
 let flamer2 = '<img src="images/burnt.png">';
 let flamer3 = '<img src="images/cooked.png">';
 
+let projectileSkippable = [poof, poof1, poof2, crystal, anvil,star]
+
 //A random number between 0 and 1 is generated and based on the value a map is generated
 let map = Math.random(0, 1);
-console.log(map);
+//console.log(map);
 var anvilArray = [];//array of anvil positions
 if(main){
   if(map < 0.25){
@@ -743,177 +745,18 @@ function shoot() {//shoots projectiles from left to right which are the snowball
     }
     for (let i = x + 2; i < state1[0].length; i++) {
       if (state1[pos][1] == dispenser1 || state1[pos][1] == dispenser2 || state1[pos][1] == dispenser3){
-        breaker = true;//boolean to check if it can breaker "harder" things example: the blockers and helmets
+        breaker = true;//boolean to check if it can break "harder" things example: the blockers and helmets
       }
       else{
         breaker = false;
       }
-      let hit = state1[pos][x + i];
-      if (hit == a) {
-        state1[pos][x + i] = pig;
+      if (damageSquare(pos,x+i,breaker)){
         break;
       }
-      if (hit == pig) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == puffPig) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == king) {
-        state1[pos][x + i] = king0;
-        break;
-      }
-      if (hit == king0) {
-        state1[pos][x + i] = king1;
-        break;
-      }
-      if (hit == king1) {
-        state1[pos][x + i] = king2;
-        break;
-      }
-      if (hit == king2) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == r1) {
-        state1[pos][x + i] = r2;
-        break;
-      }
-      else if (hit == r2) {
-        state1[pos][x + i] = r3;
-        break;
-      }
-      else if (hit == r3) {
-        state1[pos][x + i] = r4;
-        break;
-      }
-      else if (hit == r4) {
-        state1[pos][x + i] = r5;
-        break;
-      }
-      else if (hit == r5) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      else if (hit == poof || hit == poof1 || hit == poof2 ||  hit == crystal || hit == anvil || hit == star){//continues if it hits something it is allowed to go through
+      else if (projectileSkippable.includes(state1[pos][x+i])){//continues if it hits something it is allowed to go through
         continue;
       }
-      else if (hit == b4){
-        if(breaker){
-          state1[pos][x + i] = poof;
-        }
-        break;
-      }
-      else if (hit == b3){
-        if(breaker){
-          state1[pos][x + i] = b4;
-        }
-
-        break;
-
-      }
-      else if (hit == b2){
-        if(breaker){
-          state1[pos][x + i] = b3;
-        }
-        break;
-
-      }
-      else if (hit == b1){
-        if(breaker){
-          state1[pos][x + i] = b2;
-        }
-        break;
-      }
-      if (hit == s1) {
-        if(breaker){
-          state1[pos][x + i] = s2;
-        }
-        break;
-      }
-      else if (hit == s2) {
-        if(breaker){
-          state1[pos][x + i] = s3;
-        }
-        break;
-      }
-      else if (hit == s3) {
-        if(breaker){
-          state1[pos][x + i] = pig;
-          addScore(killValue(hit));
-        }
-        
-        break;
-      }
-      else if (hit == monster) {
-        if(breaker){
-          state1[pos][x + i] = poof;
-          addScore(killValue(hit));
-        }
-        
-        break;
-      }
-      if (hit == mustache1) {
-        state1[pos][x + i] = mustache2;
-        break;
-      }
-      if (hit == mustache2) {
-        state1[pos][x + i] = mustache3;
-        break;
-      }
-      if (hit == mustache3) {
-        state1[pos][x + i] = poof;
-        addScore(killValue(hit));
-        break;
-      }
-      if (hit == c1) {
-        state1[pos][x + i] = c2;
-        break;
-      }
-      if (hit == c2) {
-        state1[pos][x + i] = c3;
-        break;
-      }
-      if (hit == c3) {
-        state1[pos][x + i] = c4;
-        break;
-      }
-      if (hit == c4) {
-        state1[pos][x + i] = c5;
-        break;
-      }
-      if (hit == c5) {
-        state1[pos][x + i] = c6;
-        break;
-      }
-      if (hit == c6) {
-        state1[pos][x + i] = c7;
-        break;
-      }
-      if (hit == c7) {
-        state1[pos][x + i] = c8;
-        break;
-      }
-      if (hit == c8) {
-        state1[pos][x + i] = c9;
-        break;
-      }
-      if (hit == c9) {
-        state1[pos][x + i] = c10;
-        break;
-      }
-      if (hit == c10) {
-        addScore(killValue(hit));
-        state1[pos][x + i] = genPig(true);//generates a random pig if a crate is broken
-        break;
-      }
-      if(state1[pos][x+i] == portal)//moves to the location of the other portal and will continue on at that point
+      else if(state1[pos][x+i] == portal)//moves to the location of the other portal and will continue on at that point
         {
           if(pos == yp2 && i == xp2)
           {
@@ -961,7 +804,7 @@ function dropAnvils(){//Spawns an anvil one element below at every anvil dropper
   }
   render();
 }
-var score = 5;
+var score = 500;
 var secs = 120.1;
 var moveInterval = 12;
 var spawnInterval = 23;
@@ -1358,7 +1201,7 @@ function moveAnvils() {//moves all the anvils one unit down using the anvilArray
 
 function placeCrystals(){// uses the posArray which contains the positions of all the crystal placers to place the crystal around it.
   for (let j = 0; j < posArray3.length; j++) {
-    console.log(posArray3[j])
+    //console.log(posArray3[j])
     if(state1[posArray3[j][0]][posArray3[j][1]] == star){// if the location is a star it places stars directly around it
       //down
       if(posArray3[j][0]+1 < height){
@@ -1422,6 +1265,9 @@ function shootBoom() {////shoots the sonic shriekers from left top to down, usin
           pos = xp2;
         }
       }
+      else if (projectileSkippable.includes(hit)){//continues if it hits something it is allowed to go through
+        continue;
+      }
       else {
           state1[y1+i][pos] = replace;
       }
@@ -1446,8 +1292,8 @@ function myFunction() {
 }
 
 function killValue(type){
-  console.log("Value gotten");
-  console.log("Dead Pig Type: " + type);
+  //console.log("Value gotten");
+  //console.log("Dead Pig Type: " + type);
   if(crates.includes(type)){
     return 1;
   }
@@ -1531,7 +1377,7 @@ function damageSquare(row, col, soldierPopper){
     return true;
   }
   else if (hit == r5) {
-    state1[pos][x + i] = poof;
+    state1[row][col] = poof;
     addScore(killValue(hit));
     return true;
   }
